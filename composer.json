@@ -1,0 +1,26 @@
+{
+  "name": "colibriphp/router",
+  "description": "Router Library",
+  "keywords": [
+    "php router",
+    "router",
+    "dez-php router"
+  ],
+  "authors": [
+    {
+      "name": "Ivan Hontarenko",
+      "email": "stewie.dev@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": ">=5.6",
+    "colibriphp/http": "~0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Colibri\\Router\\": "src/"
+    }
+  }
+}
