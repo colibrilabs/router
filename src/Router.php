@@ -115,16 +115,15 @@ class Router
     $this->setController('index')->setAction('index');
   }
   
-  /**
+ /**
    * @param string $pattern
-   * @param null $matches
-   * @param null $methods
+   * @param array  $matches
+   * @param array  $methods
    * @return Route
-   * @throws RouterException
    */
-  public function add($pattern = '', $matches = null, $methods = null)
+  public function add($pattern = '', array $matches = [], array $methods = [])
   {
-    return $this->routes[] = new Route($pattern, $matches, $methods);
+    return $this->routes[] = new Route($this, $pattern, $matches, $methods);
   }
   
   /**
