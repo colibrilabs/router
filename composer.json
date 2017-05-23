@@ -16,7 +16,7 @@
   "type": "library",
   "require": {
     "php": ">=5.6",
-    "colibriphp/http": "~0.1"
+    "colibrilabs/http": "~0.1"
   },
   "autoload": {
     "psr-4": {
