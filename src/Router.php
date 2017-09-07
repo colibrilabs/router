@@ -18,6 +18,7 @@ class Router
   const MATCH_MODULE = 'module';
   const MATCH_CONTROLLER = 'controller';
   const MATCH_ACTION = 'action';
+  const MATCH_CALLBACK = 'callback';
   const MATCH_PARAMS = 'params';
   
   /**
@@ -28,6 +29,7 @@ class Router
     self::MATCH_MODULE,
     self::MATCH_CONTROLLER,
     self::MATCH_ACTION,
+    self::MATCH_CALLBACK,
     self::MATCH_PARAMS,
   ];
   
@@ -39,6 +41,7 @@ class Router
     self::MATCH_MODULE => null,
     self::MATCH_CONTROLLER => 'index',
     self::MATCH_ACTION => 'index',
+    self::MATCH_CALLBACK => null,
     self::MATCH_PARAMS => [],
   ];
   
@@ -63,6 +66,11 @@ class Router
    * @var string
    */
   protected $action = null;
+  
+  /**
+   * @var callable
+   */
+  protected $callback = null;
   
   /**
    * @var array
@@ -238,6 +246,33 @@ class Router
     $this->action = $action;
     
     return $this;
+  }
+  
+  /**
+   * @return callable
+   */
+  public function getCallback()
+  {
+    return $this->callback;
+  }
+  
+  /**
+   * @param callable $callback
+   * @return $this
+   */
+  public function setCallback($callback)
+  {
+    $this->callback = $callback;
+    
+    return $this;
+  }
+  
+  /**
+   * @return bool
+   */
+  public function hasCallback()
+  {
+    return null !== $this->callback && is_callable($this->callback, true);
   }
   
   /**

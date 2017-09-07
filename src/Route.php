@@ -406,7 +406,7 @@ class Route implements RouteInterface
     $anyPattern = '(.*)';
     $intPattern = '(\d+)';
     
-    $macroses = [
+    $macros = [
       ':module' => ['module', $pattern],
       ':controller' => ['controller', $pattern],
       ':action' => ['action', $pattern],
@@ -416,8 +416,8 @@ class Route implements RouteInterface
     
     $compiled = $this->getPseudoPattern();
     
-    foreach ($macroses as $macros => list($name, $regex)) {
-      if (strpos($compiled, $macros) !== false) {
+    foreach ($macros as $marco => list($name, $regex)) {
+      if (strpos($compiled, $marco) !== false) {
         $this->regex($name, $regex);
       }
     }
