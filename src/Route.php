@@ -330,9 +330,10 @@ class Route implements RouteInterface
    * @return bool
    * @throws RouterException
    */
-  protected function compilePattern()
+  public function compilePattern()
   {
-    $this->replaceMacros()->compileMacroses();
+    $this->replaceMacros();
+    $this->compileMacroses();
     
     $router = $this->router;
     $targetURI = $router->getTargetUri();
@@ -367,7 +368,7 @@ class Route implements RouteInterface
   /**
    * @return $this
    */
-  protected function compileMacroses()
+  public function compileMacroses()
   {
     
     $compiled = addcslashes($this->getPseudoPattern(), './~');
@@ -399,7 +400,7 @@ class Route implements RouteInterface
   /**
    * @return $this
    */
-  protected function replaceMacros()
+  public function replaceMacros()
   {
     
     $pattern = '([a-zA-Z0-9-_]+)';
