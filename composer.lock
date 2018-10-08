@@ -27,7 +27,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Colibri\\Http\\": "src/"
+                    "Subapp\\Http\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",

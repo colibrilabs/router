@@ -1,12 +1,12 @@
 <?php
 
-namespace Colibri\Router;
+namespace Subapp\Router;
 
-use Colibri\Http\Request;
+use Subapp\Http\Request;
 
 /**
  * Class Route
- * @package Colibri\Router
+ * @package Subapp\Router
  */
 class Route implements RouteInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Colibri\Router;
+namespace Subapp\Router;
 
 /**
  * Interface RouteInterface
- * @package Colibri\Router
+ * @package Subapp\Router
  */
 interface RouteInterface
 {

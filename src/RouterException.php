@@ -1,10 +1,10 @@
 <?php
 
-namespace Colibri\Router;
+namespace Subapp\Router;
 
 /**
  * Class RouterException
- * @package Colibri\Router
+ * @package Subapp\Router
  */
 class RouterException extends \Exception
 {
