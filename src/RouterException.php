@@ -8,5 +8,5 @@ namespace Subapp\Router;
  */
 class RouterException extends \Exception
 {
-  
+
 }
