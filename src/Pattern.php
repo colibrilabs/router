@@ -20,6 +20,11 @@ class Pattern
     private $pattern;
 
     /**
+     * @var string
+     */
+    private $raw;
+
+    /**
      * Criteria constructor.
      * @param string $name
      * @param string $pattern
@@ -52,6 +57,15 @@ class Pattern
     public function setPattern($pattern)
     {
         $this->pattern = addcslashes($pattern, './~');
+        $this->raw = $pattern;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRaw()
+    {
+        return $this->raw;
     }
 
     /**
