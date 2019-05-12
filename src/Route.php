@@ -259,7 +259,7 @@ class Route
                     }
 
                 } else {
-                    if ($source->getValue() == $pattern) {
+                    if ($source->getRaw() == $pattern) {
                         $matched = true;
                         break(1);
                     }
