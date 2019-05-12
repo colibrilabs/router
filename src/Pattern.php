@@ -17,6 +17,11 @@ class Pattern
     /**
      * @var string
      */
+    private $compiled;
+
+    /**
+     * @var string
+     */
     private $pattern;
 
     /**
@@ -66,6 +71,22 @@ class Pattern
     public function getRaw()
     {
         return $this->raw;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCompiled()
+    {
+        return $this->compiled;
+    }
+
+    /**
+     * @param string $compiled
+     */
+    public function setCompiled($compiled)
+    {
+        $this->compiled = $compiled;
     }
 
     /**

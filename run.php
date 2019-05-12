@@ -22,4 +22,4 @@ $result = $router->handle(
     Source::of('path', '/user/9071')
 );
 
-var_dump($router);
+//var_dump($router);

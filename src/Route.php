@@ -21,11 +21,6 @@ class Route
     /**
      * @var array
      */
-    private $compiled = [];
-
-    /**
-     * @var array
-     */
     private $matches;
 
     /**
@@ -229,22 +224,21 @@ class Route
         $this->createReplacements();
         $this->compile();
 
-        $compiled = $this->getCompiled();
+        $patterns = $this->getPatterns();
         $names = $this->getNames();
         $matched = false;
 
         foreach ($sources as $source) {
-            foreach ($compiled as $type => $pattern) {
+            foreach ($patterns as $type => $pattern) {
 
                 if ($source->getName() != $type) {
                     continue;
                 }
 
                 if ($this->isRegexable()) {
+                    $regexp = sprintf('~^%s$~Uus', $pattern);
 
-                    $pattern = "~^$pattern$~Uus";
-
-                    preg_match_all($pattern, $source->getValue(), $matches, PREG_SET_ORDER);
+                    preg_match_all($regexp, $source->getValue(), $matches, PREG_SET_ORDER);
 
                     if (count($matches) > 0 && count($matches) !== count($matches, true)) {
                         $matches = $matches[0];
@@ -257,9 +251,8 @@ class Route
                         $matched = true;
                         break(1);
                     }
-
                 } else {
-                    if ($source->getRaw() == $pattern) {
+                    if ($source->getValue() == $pattern->getRaw()) {
                         $matched = true;
                         break(1);
                     }
@@ -308,16 +301,11 @@ class Route
         }
 
         if ($this->isRegexable()) {
-
-            $compiled = array_map(function (Pattern $pattern) {
-                return $pattern->getPattern();
-            }, $patterns);
-
             foreach ($patterns as $type => $pattern) {
 
                 $names = [];
 
-                preg_match_all('~:([a-z_]+?)~Uusi', $pattern, $matches, PREG_PATTERN_ORDER);
+                preg_match_all('~:([a-z_]+?)~Uusi', $pattern->getPattern(), $matches, PREG_PATTERN_ORDER);
                 list($placeholders) = $matches;
 
                 $names = array_merge($matches[1] ?? [], $names);
@@ -330,13 +318,13 @@ class Route
                         $this->regex($name, $regex);
                     }
 
-                    $compiled = str_replace($placeholder, $regex, $compiled);
+                    $compiled = str_replace($placeholder, $regex, $pattern->getPattern());
+
+                    $pattern->setCompiled($compiled);
                 }
 
                 $this->setNames($names, $type);
             }
-
-            $this->setCompiled($compiled);
         }
 
         return $this;
@@ -388,25 +376,6 @@ class Route
     public function setRegexable($regexable)
     {
         $this->regexable = $regexable;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCompiled()
-    {
-        return $this->compiled;
-    }
-
-    /**
-     * @param array $compiled
-     * @return $this
-     */
-    public function setCompiled(array $compiled)
-    {
-        $this->compiled = $compiled;
 
         return $this;
     }
