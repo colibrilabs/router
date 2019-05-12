@@ -8,18 +8,17 @@ include_once __DIR__ . '/vendor/autoload.php';
 
 $router = new Router();
 
-$route = $router->path('/user/:id',
-    ['controller' => 'User', 'action' => 'GetUserById',]
-);
+$route = new \Subapp\Router\Route(['controller' => 'User', 'action' => 'GetUserById',]);
 
+$route->addPattern(Pattern::of('path', '/users/:id'));
 $route->addPattern(Pattern::of('domain', ':name.:noMatch'));
 $route->regex('noMatch', '(?:.*)');
 
-$route->compile();
+$router->addRoute($route);
 
 $result = $router->handle(
     Source::of('domain', 'sasha-grey.static-hub.com'),
     Source::of('path', '/user/9071')
 );
 
-//var_dump($router);
+var_dump($result);

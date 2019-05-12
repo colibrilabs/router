@@ -226,17 +226,18 @@ class Route
 
         $patterns = $this->getPatterns();
         $names = $this->getNames();
-        $matched = false;
+        $matched = true;
 
         foreach ($sources as $source) {
-            foreach ($patterns as $type => $pattern) {
 
-                if ($source->getName() != $type) {
-                    continue;
-                }
+            $pattern = $patterns[$source->getName()] ?? null;
+
+            if ($pattern) {
+
+                $type = $pattern->getName();
 
                 if ($this->isRegexable()) {
-                    $regexp = sprintf('~^%s$~Uus', $pattern);
+                    $regexp = sprintf('~^%s$~Uus', $pattern->getCompiled());
 
                     preg_match_all($regexp, $source->getValue(), $matches, PREG_SET_ORDER);
 
@@ -248,14 +249,13 @@ class Route
                             $this->setMatch($names[$type][$index], $foundValue);
                         }
 
-                        $matched = true;
-                        break(1);
+                        $matched = ($matched && true);
+                    } else {
+                        $matched = false;
                     }
+
                 } else {
-                    if ($source->getValue() == $pattern->getRaw()) {
-                        $matched = true;
-                        break(1);
-                    }
+                    $matched = ($matched && ($source->getValue() == $pattern->getRaw()));
                 }
             }
         }
@@ -310,6 +310,8 @@ class Route
 
                 $names = array_merge($matches[1] ?? [], $names);
 
+                $compiled = $pattern->getPattern();
+
                 foreach ($placeholders as $index => $placeholder) {
                     $name = $names[$index];
                     $regex = $this->replacements[$name]['regex'] ?? self::PATTERN_LITERAL;
@@ -318,10 +320,10 @@ class Route
                         $this->regex($name, $regex);
                     }
 
-                    $compiled = str_replace($placeholder, $regex, $pattern->getPattern());
-
-                    $pattern->setCompiled($compiled);
+                    $compiled = str_replace($placeholder, $regex, $compiled);
                 }
+
+                $pattern->setCompiled($compiled);
 
                 $this->setNames($names, $type);
             }
