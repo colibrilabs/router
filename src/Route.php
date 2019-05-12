@@ -236,7 +236,7 @@ class Route
                 }
 
                 if ($this->isRegexable()) {
-                    $regexp = sprintf('~^%s$~Uus', $pattern);
+                    $regexp = sprintf('~^%s$~Uus', $pattern->getCompiled());
 
                     preg_match_all($regexp, $source->getValue(), $matches, PREG_SET_ORDER);
 
