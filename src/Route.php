@@ -21,6 +21,11 @@ class Route
     /**
      * @var array
      */
+    private $compiled = [];
+
+    /**
+     * @var array
+     */
     private $matches;
 
     /**
